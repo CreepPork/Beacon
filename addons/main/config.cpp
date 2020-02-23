@@ -19,7 +19,7 @@ class CfgPatches {
 class Intercept {
     class CreepPork {
         class Beacon {
-            pluginName = "Beacon";
+            pluginName = "beacon";
         };
     };
 };
