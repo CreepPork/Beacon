@@ -9,3 +9,5 @@ edition = "2018"
 [lib]
 
 [dependencies]
+arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+libc = "*"
