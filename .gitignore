@@ -4,3 +4,4 @@
 *.biprivatekey
 releases/
 keys/
+beacon*

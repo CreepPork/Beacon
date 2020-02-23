@@ -14,4 +14,4 @@ crate-type = ["dylib"]
 arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "*"
 dotenv = "0.15.0"
-reqwest = { version = "0.10.2", features = ["json", "blocking"] }
+tungstenite = "0.10.1"
