@@ -1,0 +1,8 @@
+name = "beacon"
+prefix = "beacon"
+author = "CreepPork"
+files = [
+    "mod.cpp",
+    "logo.paa",
+    "*.dll"
+]

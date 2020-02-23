@@ -1,2 +1,6 @@
 /target
 .env
+*.pbo
+*.biprivatekey
+releases/
+keys/
