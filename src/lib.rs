@@ -19,7 +19,7 @@ fn start_server() {
                 }
             }
         });
-    } 
+    }
 }
 
 #[rv_handler]
