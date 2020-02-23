@@ -11,3 +11,4 @@ edition = "2018"
 [dependencies]
 arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "*"
+dotenv = "0.15.0"
