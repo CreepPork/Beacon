@@ -12,3 +12,4 @@ edition = "2018"
 arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "*"
 dotenv = "0.15.0"
+reqwest = { version = "0.10.2", features = ["json", "blocking"] }
