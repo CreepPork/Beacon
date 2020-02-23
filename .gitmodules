@@ -1,3 +1,4 @@
 [submodule "intercept"]
 	path = intercept
 	url = https://github.com/intercept/intercept/
+    branch = 1.96
