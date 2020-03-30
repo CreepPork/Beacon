@@ -14,6 +14,6 @@
  * Public: No
  */
 
-param ["_message"];
+params ["_message"];
 
 diag_log format ["Beacon: %1", _message];
