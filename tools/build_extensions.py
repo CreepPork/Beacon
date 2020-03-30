@@ -62,7 +62,8 @@ def main():
         )
     else:
         shutil.copyfile(
-            os.path.join(cwd, 'i686-unknown-linux-gnu', env, 'libbeacon.so'),
+            os.path.join(cwd, 'target/i686-unknown-linux-gnu',
+                         env, 'libbeacon.so'),
             os.path.join(cwd, 'beacon.so')
         )
 

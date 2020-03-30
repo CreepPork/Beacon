@@ -48,7 +48,8 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --all-targets
+          toolchain: i686-unknown-linux-gnu
+          args: --release --target i686-unknown-linux-gnu
       - name: Move Extensions
         run: python3 tools/build_extensions.py --release --ci
       - name: Build with HEMTT
