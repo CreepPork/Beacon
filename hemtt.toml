@@ -11,6 +11,8 @@ files = [
     "meta.cpp"
 ]
 
+include = ["./include"]
+
 key_name = "{{prefix}}_{{version}}"
 
 releasebuild = [
