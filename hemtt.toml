@@ -1,9 +1,21 @@
-name = "beacon"
+name = "Beacon"
 prefix = "beacon"
 author = "CreepPork"
 files = [
     "mod.cpp",
     "logo.paa",
     "*.dll",
-    "*.so"
+    "*.so",
+    "LICENSE",
+    "README.md",
+    "meta.cpp"
 ]
+
+key_name = "{{prefix}}_{{version}}"
+
+releasebuild = [
+    "@zip @beacon_{{version}}"
+]
+
+[header_exts]
+version = "{{git \"id 8\"}}"
