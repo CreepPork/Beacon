@@ -8,7 +8,9 @@ use tungstenite::Message;
 extern crate arma_rs_macros;
 
 #[rv(thread = true)]
-fn start_server() {
+fn start() {
+    rv_callback!("beacon", "beacon_common_fnc_log", "pls log this");
+
     // ToDo: Restart server if it crashes
     // ToDo: Add callback event support
     // ToDo: Add auth token support
@@ -28,11 +30,16 @@ fn start_server() {
                     };
                     websocket.write_message(Message::text(message)).unwrap();
 
-                    rv_callback!("beacon_message", "fnc", message, "some data", false, true);
+                    rv_callback!("beacon", "fnc", message, "some data", false, true);
                 }
             }
         });
     }
+}
+
+#[rv(thread = true)]
+fn stop() {
+    //
 }
 
 #[rv_handler]

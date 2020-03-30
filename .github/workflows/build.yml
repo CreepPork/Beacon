@@ -33,10 +33,15 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --all-features
+          args: --release --all-targets
       - name: Move Extensions
         run: python3 tools/build_extensions.py --release --ci
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
         with:
           command: build --release --ci
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: release
+          path: releases/@beacon_*.zip

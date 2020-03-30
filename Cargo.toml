@@ -15,3 +15,4 @@ arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 libc = "*"
 tungstenite = "0.10.1"
+openssl = { version = "0.10.28", features = ["vendored"] }

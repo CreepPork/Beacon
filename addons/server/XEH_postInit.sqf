@@ -12,4 +12,9 @@ addMissionEventHandler ["ExtensionCallback", {
     diag_log(format ["found callback: %1, %2, %3", _name, _function, _data]);
 }];
 
+diag_log "starting";
+
 [] call beacon_server_fnc_start;
+
+diag_log "started";
+diag_log GVAR(started);

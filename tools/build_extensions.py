@@ -36,14 +36,14 @@ def main():
 
     if not is_ci:
         build = subprocess.run(
-            ['cargo build {}'.format('--release' if is_release else '')], shell=True)
+            ['cargo build --all-targets {}'.format('--release' if is_release else '')], shell=True)
 
         if build.returncode > 0:
             print(build.stderr)
             return build.returncode
 
     cwd = os.getcwd()
-    target_dir = 'target/release' if is_release else 'target/debug'
+    env = 'release' if is_release else 'debug'
 
     files_to_delete = []
 
@@ -57,12 +57,12 @@ def main():
 
     if running_os == 'Windows':
         shutil.copyfile(
-            os.path.join(cwd, target_dir, 'libbeacon.dll'),
+            os.path.join(cwd, 'target', env, 'libbeacon.dll'),
             os.path.join(cwd, 'beacon_x64.dll')
         )
     else:
         shutil.copyfile(
-            os.path.join(cwd, target_dir, 'libbeacon.so'),
+            os.path.join(cwd, 'i686-unknown-linux-gnu', env, 'libbeacon.so'),
             os.path.join(cwd, 'beacon.so')
         )
 
