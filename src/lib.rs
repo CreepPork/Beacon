@@ -30,7 +30,7 @@ fn start() {
                     };
                     websocket.write_message(Message::text(message)).unwrap();
 
-                    rv_callback!("beacon", "fnc", message, "some data", false, true);
+                    rv_callback!("beacon", "fnc", message);
                 }
             }
         });

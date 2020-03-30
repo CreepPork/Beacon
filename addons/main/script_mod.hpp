@@ -17,4 +17,4 @@
     #define COMPONENT_NAME QUOTE(BEACON - COMPONENT)
 #endif
 
-#define EXTENSION_NAME beacon
+#define EXTENSION_NAME QUOTE(beacon)

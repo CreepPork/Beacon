@@ -36,7 +36,7 @@ def main():
 
     if not is_ci:
         build = subprocess.run(
-            ['cargo build --all-targets {}'.format('--release' if is_release else '')], shell=True)
+            ['cargo build --target i686-unknown-linux-gnu {}'.format('--release' if is_release else '')], shell=True)
 
         if build.returncode > 0:
             print(build.stderr)

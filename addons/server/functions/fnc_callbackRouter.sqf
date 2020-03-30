@@ -16,10 +16,31 @@
  * Public: No
  */
 
-params ["_functionName", "_data"];
+params [
+    ["_functionName", "", [""]],
+    ["_data", "", [""]]
+];
 
-_parsedData = parseSimpleArray _data;
-_function = compile _functionName;
+if (_functionName == "") exitWith {
+    WARNING_1("Function name %1 cannot be empty.",_functionName);
+};
+
+LOG_2("Data is %1, type %2",_data,typeName _data);
+
+// If data isn't string array then we want to wrap it in an array
+private _parsedData = if (_data select [0] == "[") then {
+    parseSimpleArray _data
+} else {
+    parseSimpleArray format ["[%1]", str _data]
+};
+
+LOG_2("Data is %1, type %2",_parsedData,typeName _parsedData);
+
+{
+    LOG_3("Data (%1): %2; type: %3",_forEachIndex,_x,typeName _x);    
+} forEach _parsedData;
+
+private _function = compile _functionName;
 
 if (isNil "_function") exitWith {
     WARNING_1("The given function %1 does not exist.",_functionName);
