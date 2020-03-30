@@ -2,6 +2,7 @@ use arma_rs::{rv, rv_handler};
 use std::net::TcpListener;
 use std::thread::spawn;
 use tungstenite::server::accept;
+use tungstenite::Message;
 
 #[macro_use]
 extern crate arma_rs_macros;
@@ -21,12 +22,11 @@ fn start_server() {
 
                 // We do not want to send back ping/pong messages.
                 if recieved_message.is_binary() || recieved_message.is_text() {
-                    websocket.write_message(recieved_message).unwrap();
-
                     let message = match recieved_message.to_text() {
                         Ok(m) => m,
                         Err(_) => "beacon_error",
                     };
+                    websocket.write_message(Message::text(message)).unwrap();
 
                     rv_callback!("beacon_message", "fnc", message, "some data", false, true);
                 }
