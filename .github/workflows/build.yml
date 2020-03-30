@@ -29,12 +29,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Build PBOs
-        uses: arma-actions/hemtt@master
-        with:
-          command: build --release --ci
       - name: Build Extensions
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release && python3 tools/build_extensions.py --release
+          args: --release --all-features
+      - name: Move Extensions
+        run: python3 tools/build_extensions.py --release --ci
+      - name: Build with HEMTT
+        uses: arma-actions/hemtt@master
+        with:
+          command: build --release --ci

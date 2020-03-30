@@ -45,7 +45,12 @@ def main():
     cwd = os.getcwd()
     target_dir = 'target/release' if is_release else 'target/debug'
 
-    files_to_delete = glob.glob(os.path.join(cwd, 'extensions/') + 'beacon*')
+    files_to_delete = []
+
+    if running_os == 'Windows':
+        files_to_delete = glob.glob(cwd + os.path.sep + 'beacon*.dll')
+    else:
+        files_to_delete = glob.glob(cwd + os.path.sep + 'beacon*.so')
 
     for to_delete in files_to_delete:
         os.remove(to_delete)
@@ -53,12 +58,12 @@ def main():
     if running_os == 'Windows':
         shutil.copyfile(
             os.path.join(cwd, target_dir, 'libbeacon.dll'),
-            os.path.join(cwd, 'extensions/beacon_x64.dll')
+            os.path.join(cwd, 'beacon_x64.dll')
         )
     else:
         shutil.copyfile(
             os.path.join(cwd, target_dir, 'libbeacon.so'),
-            os.path.join(cwd, 'extensions/beacon.so')
+            os.path.join(cwd, 'beacon.so')
         )
 
 
