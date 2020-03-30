@@ -48,7 +48,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          toolchain: i686-unknown-linux-gnu
+          use-cross: true
           args: --release --target i686-unknown-linux-gnu
       - name: Move Extensions
         run: python3 tools/build_extensions.py --release --ci
