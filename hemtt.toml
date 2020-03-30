@@ -16,7 +16,7 @@ include = ["./include"]
 key_name = "{{prefix}}_{{version}}"
 
 releasebuild = [
-    "@zip @beacon_{{version}}"
+    "@zip @beacon"
 ]
 
 [header_exts]
