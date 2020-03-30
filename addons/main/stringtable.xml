@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Beacon">
+    <Package name="Main">
+        <Key ID="STR_Beacon_Main_DisplayName">
+            <English>Beacon</English>
+            <German>Beacon</German>
+            <Polish>Beacon</Polish>
+            <Portuguese>Beacon</Portuguese>
+            <Russian>Beacon</Russian>
+            <Czech>Beacon</Czech>
+            <Spanish>Beacon</Spanish>
+            <Italian>Beacon</Italian>
+            <French>Beacon</French>
+            <Korean>Beacon</Korean>
+            <Japanese>Beacon</Japanese>
+            <Chinese>Beacon</Chinese>
+            <Chinesesimp>Beacon</Chinesesimp>
+        </Key>
+        <Key ID="STR_Beacon_Main_Author">
+            <English>CreepPork</English>
+            <German>CreepPork</German>
+            <Polish>CreepPork</Polish>
+            <Portuguese>CreepPork</Portuguese>
+            <Russian>CreepPork</Russian>
+            <Czech>CreepPork</Czech>
+            <Spanish>CreepPork</Spanish>
+            <Italian>CreepPork</Italian>
+            <French>CreepPork</French>
+            <Korean>CreepPork</Korean>
+            <Japanese>CreepPork</Japanese>
+            <Chinese>CreepPork</Chinese>
+            <Chinesesimp>CreepPork</Chinesesimp>
+        </Key>
+        <Key ID="STR_Beacon_Main_URL">
+            <English>https://github.com/CreepPork/Beacon</English>
+            <German>https://github.com/CreepPork/Beacon</German>
+            <Polish>https://github.com/CreepPork/Beacon</Polish>
+            <Portuguese>https://github.com/CreepPork/Beacon</Portuguese>
+            <Russian>https://github.com/CreepPork/Beacon</Russian>
+            <Czech>https://github.com/CreepPork/Beacon</Czech>
+            <Spanish>https://github.com/CreepPork/Beacon</Spanish>
+            <Italian>https://github.com/CreepPork/Beacon</Italian>
+            <French>https://github.com/CreepPork/Beacon</French>
+            <Korean>https://github.com/CreepPork/Beacon</Korean>
+            <Japanese>https://github.com/CreepPork/Beacon</Japanese>
+            <Chinese>https://github.com/CreepPork/Beacon</Chinese>
+            <Chinesesimp>https://github.com/CreepPork/Beacon</Chinesesimp>
+        </Key>
+    </Package>
+</Project>

@@ -4,5 +4,6 @@ author = "CreepPork"
 files = [
     "mod.cpp",
     "logo.paa",
-    "*.dll"
+    "*.dll",
+    "*.so"
 ]

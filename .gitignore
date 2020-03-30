@@ -2,6 +2,7 @@
 .env
 *.pbo
 *.biprivatekey
-releases/
-keys/
+releases/*
+keys/*
 beacon*
+hemtte

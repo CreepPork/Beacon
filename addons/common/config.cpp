@@ -6,12 +6,12 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"cba_main"};
-        author = CSTRING(Author);
+        requiredAddons[] = {"beacon_main"};
+        author = ECSTRING(main,Author);
         authors[] = {"CreepPork"};
-        url = CSTRING(URL);
+        url = ECSTRING(main,URL);
         VERSION_CONFIG;
     };
 };
 
-#include "CfgSettings.hpp"
+#include "CfgEventHandlers.hpp"
