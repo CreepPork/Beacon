@@ -9,11 +9,11 @@
  * None
  *
  * Example:
- * ["my message"] call beacon_common_fnc_log
+ * ["My message"] call beacon_common_fnc_log
  *
  * Public: No
  */
 
 param ["_message"];
 
-diag_log _message;
+diag_log format ["Beacon: %1", _message];
