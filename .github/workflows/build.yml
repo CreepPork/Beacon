@@ -35,6 +35,6 @@ jobs:
           command: build --release --ci
       - name: Build Extensions
         uses: actions-rs/cargo@v1
-          with:
-            command: build
-            args: --release && python3 tools/build_extensions.py --release
+        with:
+          command: build
+          args: --release && python3 tools/build_extensions.py --release
