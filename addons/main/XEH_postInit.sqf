@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 addMissionEventHandler ["ExtensionCallback", {
-	params ["_name", "_function", "_data"];
+    params ["_name", "_function", "_data"];
 
     diag_log(format ["found callback: %1, %2, %3", _name, _function, _data]);
 }];
