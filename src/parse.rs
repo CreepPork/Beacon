@@ -40,16 +40,27 @@ fn json_to_sqf_parse_array(json: &Value, sqf_vec: &mut Vec<String>) {
 }
 
 pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
-    let json: Value = serde_json::from_str(str_json)?;
+    let json: Value = match serde_json::from_str(str_json) {
+        Ok(j) => j,
+        Err(_) => return Ok(String::from("[nil]")),
+    };
 
     let mut sqf_vec: Vec<String> = Vec::new();
+
+    if json.is_array() {
+        json_to_sqf_parse_array(&json, &mut sqf_vec);
+    }
 
     if json.is_boolean() {
         sqf_vec.push(json.to_string());
     }
 
-    if json.is_array() {
-        json_to_sqf_parse_array(&json, &mut sqf_vec);
+    if json.is_number() || json.is_string() {
+        sqf_vec.push(json.to_string());
+    }
+
+    if json.is_null() {
+        sqf_vec.push(String::from("nil"));
     }
 
     if json.is_object() {
@@ -89,5 +100,17 @@ mod test {
             r#"[[["alive", true],["health", 0.5]],[["health", 0.5]],[["name", "CreepPork"]]]"#;
 
         assert_eq!(json_to_sqf(&json).unwrap(), expected_sqf);
+    }
+
+    #[test]
+    fn it_will_parse_any_number_to_sqf() {
+        assert_eq!(json_to_sqf("1").unwrap(), "[1]");
+        assert_eq!(json_to_sqf("0.23").unwrap(), "[0.23]");
+    }
+
+    #[test]
+    fn it_will_parse_undefined_and_null_to_sqf() {
+        assert_eq!(json_to_sqf("undefined").unwrap(), "[nil]");
+        assert_eq!(json_to_sqf("null").unwrap(), "[nil]");
     }
 }
