@@ -1,34 +1,28 @@
-use serde_json::json;
 use serde_json::Value;
 
-pub fn json_to_sqf(str_json: &str) -> Result<String, &str> {
-    // todo: panik
-    let json: Vec<Value> = serde_json::from_str(str_json).unwrap();
+pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
+    let json: Value = serde_json::from_str(str_json)?;
 
-    // for j in &json {
-    //     //
-    // }
+    let mut sqf_vec: Vec<String> = Vec::new();
 
-    let mut sqf = String::from(str_json.trim());
+    for (key, value) in json.as_object().unwrap() {
+        sqf_vec.push(format!(r#"["{}", {}]"#, &key, &value.to_string()));
+    }
 
-    // Drop { }
-    sqf.remove(0);
-    sqf.pop();
+    let mut sqf_string = String::from("[");
+    let sqf_vec_last_item_index = sqf_vec.len() - 1;
 
-    // Wrap in array
-    // We get this:
-    // ["name": "CreepPork", "alive": true, "health": 0.5]
-    sqf.insert_str(0, "[");
-    sqf.push_str("]");
+    for (i, s) in sqf_vec.iter().enumerate() {
+        sqf_string.push_str(s);
 
-    // ["<key>", <value>]
-    let sqf_vec: Vec<(&str, &str)> = Vec::new();
+        // Add , if not the last item in the array
+        if sqf_vec_last_item_index != i {
+            sqf_string.push_str(",");
+        }
+    }
+    sqf_string.push_str("]");
 
-    // let split_sqf_vec: Vec<&str> = sqf.split(",")
-
-    // Parse <value> into it's specific data type (undefined|null, number, bool, string, object, array)
-
-    Ok(sqf.to_string())
+    Ok(sqf_string)
 }
 
 // pub fn sqf_to_json(sqf: &str) -> &str {
@@ -40,9 +34,9 @@ mod test {
     use super::*;
 
     #[test]
-    fn it_will_parse_json_to_sqf() {
+    fn it_will_parse_object_json_to_sqf() {
         let json = r#"{"name": "CreepPork", "alive": true, "health": 0.5}"#;
-        let expected_sqf = r#"[["name", "CreepPork"], ["alive", true], ["health", 0.5]]"#;
+        let expected_sqf = r#"[["alive", true],["health", 0.5],["name", "CreepPork"]]"#;
 
         assert_eq!(json_to_sqf(&json).unwrap(), expected_sqf);
     }
