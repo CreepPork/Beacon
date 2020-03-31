@@ -35,8 +35,13 @@ def main():
     os.chdir(root_dir)
 
     if not is_ci:
+        target = ""
+
+        if running_os == "Linux":
+            target = "--target i686-unknown-linux-gnu"
+
         build = subprocess.run(
-            ['cargo build --target i686-unknown-linux-gnu {}'.format('--release' if is_release else '')], shell=True)
+            ['cargo build {} {}'.format(target, '--release' if is_release else '')], shell=True)
 
         if build.returncode > 0:
             print(build.stderr)

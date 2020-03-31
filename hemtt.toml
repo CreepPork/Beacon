@@ -16,7 +16,13 @@ include = ["./include"]
 key_name = "{{prefix}}_{{version}}"
 
 releasebuild = [
-    "@zip @beacon"
+    "@zip @beacon",
+    "!release_build"
+]
+
+[scripts.release_build]
+steps = [
+    "python3 tools/release_build.py"
 ]
 
 [header_exts]
