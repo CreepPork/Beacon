@@ -57,15 +57,16 @@ jobs:
           rustup toolchain update stable --no-self-update
           rustup default stable
           rustup target install i686-unknown-linux-gnu
+          cargo install cross
 
       - name: Build Extensions
-        run: cargo build --target i686-unknown-linux-gnu
+        run: cross build --target i686-unknown-linux-gnu
 
       - name: Test Extensions
-        run: cargo test --target i686-unknown-linux-gnu
+        run: cross test --target i686-unknown-linux-gnu
 
       - name: Build Extensions (Release)
-        run: cargo build --release --target i686-unknown-linux-gnu
+        run: cross build --release --target i686-unknown-linux-gnu
 
       - name: Move Extensions
         run: python3 tools/build_extensions.py --release --ci
