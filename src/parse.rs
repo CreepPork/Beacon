@@ -36,7 +36,6 @@ fn json_to_sqf_parse_array(json: &Value, sqf_vec: &mut Vec<String>) {
     for item in combined_vector.iter() {
         sqf_vec.push(make_sqf_array_string(item));
     }
-    println!("{:?}", sqf_vec);
 }
 
 pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
@@ -67,14 +66,67 @@ pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
         json_to_sqf_parse_object(&json, &mut sqf_vec);
     }
 
-    let sqf_string = make_sqf_array_string(&sqf_vec);
+    let str_sqf = make_sqf_array_string(&sqf_vec);
 
-    Ok(sqf_string)
+    Ok(str_sqf)
 }
 
-// pub fn sqf_to_json(sqf: &str) -> &str {
-//     ""
-// }
+/**
+ * [[["alive", true],["health", 0.5]],[["health", 0.5]],[["name", "CreepPork"]]]
+ * [{"alive": true, "health": 0.5},{"health": 0.5},{"name": "CreepPork"}]
+ */
+fn sqf_to_json_parse_array(str_sqf: &str) -> String {
+    let mut str_json = String::from(str_sqf);
+
+    // Drop both []
+    str_json.remove(0);
+    str_json.pop();
+
+    // Replace all other [] with {} (except the outer ones, those we remove and add back in)
+    str_json.remove(0);
+    str_json.pop();
+
+    str_json = str_json.replace("[", "{");
+    str_json = str_json.replace("]", "}");
+
+    str_json.insert_str(0, "[");
+    str_json.push_str("]");
+
+    // Inside the arrays transform the , to :
+    str_json = str_json.replace(r#"","#, r#"":"#);
+
+    // Replace object [] with {}
+    // str_json = str_json.replace(r#"[{""#, r#"[[{""#);
+    str_json = str_json.replace(r#"},{""#, r#",""#);
+    str_json = str_json.replace(r#"}},{{""#, r#"},{""#);
+
+    str_json
+}
+
+/**
+ * [["alive", true],["health", 0.5],["name", "CreepPork"]]
+ * {"name": "CreepPork", "alive": true, "health": 0.5}
+ */
+fn sqf_to_json_parse_object(str_sqf: &str) -> String {
+    let str_json = String::from("");
+
+    str_json
+}
+
+pub fn sqf_to_json(str_sqf: &str) -> Result<String, serde_json::Error> {
+    let mut str_json = String::from("{}");
+
+    // If has 3 arrays then drop the first
+    if str_sqf.starts_with("[[[") {
+        str_json = sqf_to_json_parse_array(str_sqf);
+    }
+
+    // If has 2 arrays, drop 1
+    if str_sqf.starts_with(r#"[[""#) {
+        str_json = sqf_to_json_parse_object(str_sqf);
+    }
+    Ok(str_json)
+}
 
 #[cfg(test)]
 mod test {
@@ -112,5 +164,14 @@ mod test {
     fn it_will_parse_undefined_and_null_to_sqf() {
         assert_eq!(json_to_sqf("undefined").unwrap(), "[nil]");
         assert_eq!(json_to_sqf("null").unwrap(), "[nil]");
+    }
+
+    #[test]
+    fn it_will_parse_sqf_array_to_json_array() {
+        let sqf =
+            r#"[[["alive", true],["health", 0.5]],[["health", 0.5]],[["name", "CreepPork"]]]"#;
+        let json = r#"[{"alive": true,"health": 0.5},{"health": 0.5},{"name": "CreepPork"}]"#;
+
+        assert_eq!(sqf_to_json(sqf).unwrap(), json);
     }
 }
