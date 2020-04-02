@@ -7,17 +7,9 @@ import platform
 import glob
 
 
-def is_production():
-    return '--release' in sys.argv
-
-
-def is_automated():
-    return '--ci' in sys.argv
-
-
 def main():
-    is_release = is_production()
-    is_ci = is_automated()
+    is_release = '--release' in sys.argv
+    is_ci = '--ci' in sys.argv
 
     print('Is release build? {}'.format(is_release))
     print('Is CI build? {}'.format(is_ci))
@@ -35,13 +27,15 @@ def main():
     os.chdir(root_dir)
 
     if not is_ci:
-        target = ""
+        commands = [shutil.which('cargo'), 'build']
 
         if running_os == "Linux":
-            target = "--target i686-unknown-linux-gnu"
+            commands.append("--target i686-unknown-linux-gnu")
 
-        build = subprocess.run(
-            ['cargo build {} {}'.format(target, '--release' if is_release else '')], shell=True)
+        if is_release:
+            commands.append("--release")
+
+        build = subprocess.run(commands, shell=True)
 
         if build.returncode > 0:
             print(build.stderr)
