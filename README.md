@@ -12,5 +12,4 @@ A Rust library which is loaded by Arma 3, as an extension, to output game data t
 
 - `rustup install i686-unknown-linux-gnu`
 - `python3 tools/get_hemtt.py`
-- `mv hemtt hemtte`
 - `bash ./build.sh`
