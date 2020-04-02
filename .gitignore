@@ -5,6 +5,7 @@
 releases/*
 keys/*
 beacon*
-hemtte
+hemtt*
+!hemtt.toml
 extensions/*
 !extensions/.gitkeep
