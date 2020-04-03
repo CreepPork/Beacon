@@ -38,7 +38,6 @@ def main():
         build = subprocess.run(commands, shell=False)
 
         if build.returncode > 0:
-            print(build.stderr)
             return build.returncode
 
     cwd = os.getcwd()
