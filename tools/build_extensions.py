@@ -20,20 +20,20 @@ def main():
         print('{} is not a supported OS.'.format(running_os))
         return 1
 
-    root_dir = ".."
-    if os.path.exists("addons"):
-        root_dir = "."
+    root_dir = '..'
+    if os.path.exists('addons'):
+        root_dir = '.'
 
     os.chdir(root_dir)
 
     if not is_ci:
         commands = [shutil.which('cargo'), 'build']
 
-        if running_os == "Linux":
-            commands.append("--target i686-unknown-linux-gnu")
+        if running_os == 'Linux':
+            commands.append('--target i686-unknown-linux-gnu')
 
         if is_release:
-            commands.append("--release")
+            commands.append('--release')
 
         build = subprocess.run(commands, shell=True)
 
@@ -67,5 +67,5 @@ def main():
         )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())
