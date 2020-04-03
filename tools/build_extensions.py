@@ -30,12 +30,12 @@ def main():
         commands = [shutil.which('cargo'), 'build']
 
         if running_os == 'Linux':
-            commands.append('--target i686-unknown-linux-gnu')
+            commands.append('--target=i686-unknown-linux-gnu')
 
         if is_release:
             commands.append('--release')
 
-        build = subprocess.run(commands, shell=True)
+        build = subprocess.run(commands, shell=False)
 
         if build.returncode > 0:
             print(build.stderr)
