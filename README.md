@@ -1,6 +1,6 @@
 # Beacon
 
-A Rust library which is loaded by Arma 3, as an extension, to output game data to a Laravel app.
+A Rust library which is loaded by Arma 3, as an extension, that creates a websocket server and allows full-duplex communication.
 
 ## Compile
 
