@@ -69,7 +69,7 @@ jobs:
         run: cross build --release --target i686-unknown-linux-gnu
 
       - name: Move Extensions
-        run: python3 tools/build_extensions.py --release --ci
+        run: python tools/build_extensions.py --release --ci
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
