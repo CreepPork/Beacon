@@ -22,7 +22,7 @@ releasebuild = [
 
 [scripts.release_build]
 steps = [
-    "python3 tools/release_build.py"
+    "python tools/release_build.py"
 ]
 
 [header_exts]
