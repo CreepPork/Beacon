@@ -9,7 +9,6 @@ on:
 jobs:
   validate:
     name: Validate
-    if: ! contains(github.event.head_commit.message, '[ci skip]')
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the source code
@@ -27,7 +26,6 @@ jobs:
   
   build-linux:
     name: Build (Linux)
-    if: ! contains(github.event.head_commit.message, '[ci skip]')
     runs-on: ubuntu-latest
 
     steps:
@@ -96,7 +94,6 @@ jobs:
 
   build-windows:
     name: Build (Windows)
-    if: ! contains(github.event.head_commit.message, '[ci skip]')
     runs-on: windows-latest
 
     steps:
