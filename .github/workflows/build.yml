@@ -75,7 +75,7 @@ jobs:
         run: cross build --release --target i686-unknown-linux-gnu
 
       - name: Move Extension
-        run: mv target/release/libbeacon.so ./beacon.so
+        run: mv ./target/release/libbeacon.so ./beacon.so
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
@@ -83,7 +83,7 @@ jobs:
           command: build --release --ci
 
       - name: Rename Release to System
-        run: mv releases/@beacon.zip releases/@beacon_linux.zip
+        run: mv ./releases/@beacon.zip ./releases/@beacon_linux.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -144,7 +144,8 @@ jobs:
         run: cargo build --release
 
       - name: Move Extension
-        run: mv target/release/libbeacon.dll ./beacon_x64.dll
+        shell: bash
+        run: mv ./target/release/libbeacon.dll ./beacon_x64.dll
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
@@ -152,7 +153,8 @@ jobs:
           command: build --release --ci
 
       - name: Rename Release to System
-        run: mv releases/@beacon.zip releases/@beacon_windows.zip
+        shell: bash
+        run: mv ./releases/@beacon.zip ./releases/@beacon_windows.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
