@@ -63,16 +63,16 @@ jobs:
           rustup toolchain update stable --no-self-update
           rustup default stable
           rustup target install i686-unknown-linux-gnu
-          cargo install cross
+          sudo apt install libssl-dev:i386
 
       - name: Build Extension
-        run: cross build --target i686-unknown-linux-gnu
+        run: cargo build --target i686-unknown-linux-gnu
 
       - name: Test Extension
-        run: cross test --target i686-unknown-linux-gnu
+        run: cargo test --target i686-unknown-linux-gnu
 
       - name: Build Extension (Release)
-        run: cross build --release --target i686-unknown-linux-gnu
+        run: cargo build --release --target i686-unknown-linux-gnu
 
       - name: Move Extension
         run: mv ./target/i686-unknown-linux-gnu/release/libbeacon.so ./beacon.so

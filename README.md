@@ -11,5 +11,5 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 ### Linux
 
 - `rustup install i686-unknown-linux-gnu`
-- `python3 tools/get_hemtt.py`
-- `bash ./build.sh`
+- `sudo apt install libssl-dev:i386`
+- `cargo build --target i686-unknown-linux-gnu`
