@@ -42,11 +42,9 @@ LOG_2("Data is %1, type %2",_parsedData,typeName _parsedData);
 
 private _function = compile _functionName;
 
-if (isNil "_function") exitWith {
+if (isNil { call _function }) exitWith {
     WARNING_1("The given function %1 does not exist.",_functionName);
 };
-
-LOG_3("Function: %1, %2, %3",_functionName,_function,_parsedData call _function);
 
 // We have a double-call here because otherwise it returns the code itself
 _parsedData call call _function;

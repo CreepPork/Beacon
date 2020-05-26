@@ -13,6 +13,7 @@ crate-type = ["dylib"]
 [dependencies]
 arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
+dotenv = "0.15.0"
 libc = "*"
 tungstenite = "0.10.1"
 serde_json = "1.0"

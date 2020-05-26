@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * ["hint ""hello world""] call beacon_server_fnc_callbackRouter
+ * ["hint ""hello world""] call beacon_server_fnc_execute
  *
  * Public: No
  */
