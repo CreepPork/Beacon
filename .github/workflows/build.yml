@@ -66,6 +66,7 @@ jobs:
 
       - name: Install OpenSSL (Development)
         run: |
+          sudo dpkg --add-architecture i386;
           sudo apt update
           sudo apt install libssl-dev:i386
 
