@@ -7,6 +7,7 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 ### Windows
 
 - `cargo build`
+- `bash ./build.sh`
 
 ### Linux
 
@@ -17,3 +18,4 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 - `sudo apt install gcc-multilib`
 - `rustup install i686-unknown-linux-gnu`
 - `PKG_CONFIG_ALLOW_CROSS=1 cargo build --target i686-unknown-linux-gnu`
+- `bash ./build.sh`
