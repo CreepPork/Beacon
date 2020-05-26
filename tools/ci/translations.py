@@ -8,12 +8,12 @@
 ######################################
 
 import os
-import sys
 import shutil
-import traceback
 import subprocess as sp
-from github import Github
+import sys
+import traceback
 
+from github import Github
 
 TRANSLATIONISSUE = 1
 TRANSLATIONBODY = """**[Translation Guide](http://ace3mod.com/wiki/development/how-to-translate-ace3.html)**
@@ -28,7 +28,7 @@ REPOPATH = "{}/{}".format(REPOUSER, REPONAME)
 
 def update_translations(repo):
     diag = sp.check_output(
-        ["python3", "tools/stringtable_diag.py", "--markdown"])
+        ["python3", "tools/ci/stringtable_diag.py", "--markdown"])
     diag = str(diag, "utf-8")
     issue = repo.get_issue(TRANSLATIONISSUE)
     issue.edit(body=TRANSLATIONBODY.format(diag))
