@@ -83,20 +83,20 @@ jobs:
           command: build --release --ci
 
       - name: Rename Release to System
-        run: mv ./releases/@beacon.zip ./releases/@beacon_linux.zip
+        run: mv ./releases/@beacon.zip ./@beacon_linux.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: linux
-          path: releases/@beacon_linux.zip
+          path: ./@beacon_linux.zip
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            releases/@beacon_linux.zip
+            ./@beacon_linux.zip
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -154,20 +154,20 @@ jobs:
 
       - name: Rename Release to System
         shell: bash
-        run: mv ./releases/@beacon.zip ./releases/@beacon_windows.zip
+        run: mv ./releases/@beacon.zip ./@beacon_windows.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: windows
-          path: releases/@beacon_windows.zip
+          path: ./@beacon_windows.zip
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            releases/@beacon_windows.zip
+            ./@beacon_windows.zip
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
