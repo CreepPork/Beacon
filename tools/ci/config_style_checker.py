@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
+import argparse
 import fnmatch
+import ntpath
 import os
 import re
-import ntpath
 import sys
-import argparse
 
 
 def check_config_style(filepath):
@@ -146,15 +146,15 @@ def main():
     args = parser.parse_args()
 
     # Allow running from root directory as well as from inside the tools directory
-    rootDir = "../addons"
+    rootDir = "../../addons"
     if (os.path.exists("addons")):
         rootDir = "addons"
 
     for root, dirnames, filenames in os.walk(rootDir + '/' + args.module):
-      for filename in fnmatch.filter(filenames, '*.cpp'):
-        sqf_list.append(os.path.join(root, filename))
-      for filename in fnmatch.filter(filenames, '*.hpp'):
-        sqf_list.append(os.path.join(root, filename))
+        for filename in fnmatch.filter(filenames, '*.cpp'):
+            sqf_list.append(os.path.join(root, filename))
+        for filename in fnmatch.filter(filenames, '*.hpp'):
+            sqf_list.append(os.path.join(root, filename))
 
     for filename in sqf_list:
         bad_count = bad_count + check_config_style(filename)

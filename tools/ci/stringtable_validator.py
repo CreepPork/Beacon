@@ -154,7 +154,7 @@ def main():
     print("-----------------------")
 
     # Allow running from root directory and tools directory
-    root_dir = ".."
+    root_dir = "../.."
     if os.path.exists("addons"):
         root_dir = "."
 
