@@ -69,6 +69,7 @@ jobs:
           sudo dpkg --add-architecture i386;
           sudo apt update
           sudo apt install libssl-dev:i386
+          export PKG_CONFIG_ALLOW_CROSS=1
 
       - name: Build Extension
         run: cargo build --target i686-unknown-linux-gnu

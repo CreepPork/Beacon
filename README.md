@@ -10,6 +10,8 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 
 ### Linux
 
-- `rustup install i686-unknown-linux-gnu`
+- `sudo dpkg --add-architecture i386;`
+- `sudo apt update`
 - `sudo apt install libssl-dev:i386`
+- `rustup install i686-unknown-linux-gnu`
 - `cargo build --target i686-unknown-linux-gnu`
