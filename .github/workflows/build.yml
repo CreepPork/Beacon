@@ -133,15 +133,16 @@ jobs:
         run: |
           rustup toolchain update stable --no-self-update
           rustup default stable
+          cargo install cross
 
       - name: Build Extension
-        run: cargo build
+        run: cross build
 
       - name: Test Extension
-        run: cargo test
+        run: cross test
 
       - name: Build Extension (Release)
-        run: cargo build --release
+        run: cross build --release
 
       - name: Move Extension
         shell: bash
