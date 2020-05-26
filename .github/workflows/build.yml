@@ -63,6 +63,10 @@ jobs:
           rustup toolchain update stable --no-self-update
           rustup default stable
           rustup target install i686-unknown-linux-gnu
+
+      - name: Install OpenSSL (Development)
+        run: |
+          sudo apt update
           sudo apt install libssl-dev:i386
 
       - name: Build Extension
