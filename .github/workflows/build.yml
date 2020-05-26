@@ -64,12 +64,13 @@ jobs:
           rustup default stable
           rustup target install i686-unknown-linux-gnu
 
-      - name: Install OpenSSL (Development)
+      - name: Install APT packages
         run: |
           sudo dpkg --add-architecture i386;
           sudo apt update
           sudo apt install libssl-dev
           sudo apt install libssl-dev:i386
+          sudo apt install gcc-multilib
 
       - name: Build Extension
         run: PKG_CONFIG_ALLOW_CROSS=1 cargo build --target i686-unknown-linux-gnu
