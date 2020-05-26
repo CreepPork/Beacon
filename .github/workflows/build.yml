@@ -90,8 +90,7 @@ jobs:
           command: build --release --ci
 
       - name: Rename Release to System
-        run: |
-          mv ./releases/@beacon.zip ./@beacon_linux.zip
+        run: mv ./releases/@beacon.zip ./@beacon_linux.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
