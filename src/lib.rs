@@ -28,11 +28,11 @@ fn start() {
                         Err(_) => break,
                     };
 
-                    let sqf_code = parse::json_to_sqf(&json).unwrap();
+                    // let sqf_code = parse::json_to_sqf(&json).unwrap();
 
-                    websocket.write_message(Message::text(&sqf_code)).unwrap();
+                    websocket.write_message(Message::text(json)).unwrap();
 
-                    rv_callback!("beacon", "fnc", sqf_code);
+                    rv_callback!("beacon", "beacon_server_fnc_execute", &json);
                 }
             }
         });

@@ -46,6 +46,8 @@ if (isNil "_function") exitWith {
     WARNING_1("The given function %1 does not exist.",_functionName);
 };
 
+LOG_3("Function: %1, %2, %3",_functionName,_function,_parsedData call _function);
+
 _parsedData call _function;
 
 nil
