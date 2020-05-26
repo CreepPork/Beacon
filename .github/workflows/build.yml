@@ -133,20 +133,19 @@ jobs:
         run: |
           rustup toolchain update stable --no-self-update
           rustup default stable
-          cargo install cross
 
       - name: Build Extension
-        run: cross build
+        run: cargo build
 
       - name: Test Extension
-        run: cross test
+        run: cargo test
 
       - name: Build Extension (Release)
-        run: cross build --release
+        run: cargo build --release
 
       - name: Move Extension
         shell: bash
-        run: mv ./target/release/libbeacon.dll ./beacon_x64.dll
+        run: mv ./target/release/beacon.dll ./beacon_x64.dll
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
