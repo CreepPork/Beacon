@@ -48,6 +48,7 @@ if (isNil "_function") exitWith {
 
 LOG_3("Function: %1, %2, %3",_functionName,_function,_parsedData call _function);
 
-_parsedData call _function;
+// We have a double-call here because otherwise it returns the code itself
+_parsedData call call _function;
 
 nil
