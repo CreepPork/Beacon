@@ -10,17 +10,23 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout the source code
       uses: actions/checkout@v2
+
     - name: Validate SQF
-      run: python3 tools/sqf_validator.py
+      run: python3 tools/ci/sqf_validator.py
+
     - name: Validate Config
-      run: python3 tools/config_style_checker.py
+      run: python3 tools/ci/config_style_checker.py
+
     - name: Validate Stringtables
-      run: python3 tools/stringtable_validator.py
+      run: python3 tools/ci/stringtable_validator.py
+
     - name: Validate Return Types
-      run: python3 tools/return_checker.py
+      run: python3 tools/ci/return_checker.py
+
     - name: Check for BOM
       uses: arma-actions/bom-check@master
   
@@ -59,22 +65,25 @@ jobs:
           rustup target install i686-unknown-linux-gnu
           cargo install cross
 
-      - name: Build Extensions
+      - name: Build Extension
         run: cross build --target i686-unknown-linux-gnu
 
-      - name: Test Extensions
+      - name: Test Extension
         run: cross test --target i686-unknown-linux-gnu
 
-      - name: Build Extensions (Release)
+      - name: Build Extension (Release)
         run: cross build --release --target i686-unknown-linux-gnu
 
-      - name: Move Extensions
-        run: python tools/build_extensions.py --release --ci
+      - name: Move Extension
+        run: mv target/release/libbeacon.so ./beacon.so
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
         with:
           command: build --release --ci
+
+      - name: Rename Release to System
+        run: mv releases/@beacon.zip releases/@beacon_linux.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -92,68 +101,68 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-windows:
-    name: Build (Windows)
-    runs-on: windows-latest
+  # build-windows:
+  #   name: Build (Windows)
+  #   runs-on: windows-latest
 
-    steps:
-      - name: Checkout the source code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
+  #   steps:
+  #     - name: Checkout the source code
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 1
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+  #     - name: Cache cargo registry
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.cargo/registry
+  #         key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+  #     - name: Cache cargo index
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.cargo/git
+  #         key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Cache cargo build
-        uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+  #     - name: Cache cargo build
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: target
+  #         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Install Rust stable
-        run: |
-          rustup toolchain update stable --no-self-update
-          rustup default stable
+  #     - name: Install Rust stable
+  #       run: |
+  #         rustup toolchain update stable --no-self-update
+  #         rustup default stable
 
-      - name: Build Extensions
-        run: cargo build
+  #     - name: Build Extensions
+  #       run: cargo build
 
-      - name: Test Extensions
-        run: cargo test
+  #     - name: Test Extensions
+  #       run: cargo test
 
-      - name: Build Extensions (Release)
-        run: cargo build --release
+  #     - name: Build Extensions (Release)
+  #       run: cargo build --release
 
-      - name: Move Extensions
-        run: python tools/build_extensions.py --release --ci
+  #     - name: Move Extensions
+  #       run: python tools/build_extensions.py --release --ci
 
-      - name: Build with HEMTT
-        uses: arma-actions/hemtt@master
-        with:
-          command: build --release --ci
+  #     - name: Build with HEMTT
+  #       uses: arma-actions/hemtt@master
+  #       with:
+  #         command: build --release --ci
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: windows
-          path: releases/@beacon_windows.zip
+  #     - name: Upload Artifact
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: windows
+  #         path: releases/@beacon_windows.zip
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            releases/@beacon_windows.zip
-          draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v1
+  #       if: startsWith(github.ref, 'refs/tags/')
+  #       with:
+  #         files: |
+  #           releases/@beacon_windows.zip
+  #         draft: true
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

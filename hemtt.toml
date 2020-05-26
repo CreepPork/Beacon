@@ -17,12 +17,6 @@ key_name = "{{prefix}}_{{version}}"
 
 releasebuild = [
     "@zip @beacon",
-    "!release_build"
-]
-
-[scripts.release_build]
-steps = [
-    "python tools/release_build.py"
 ]
 
 [header_exts]

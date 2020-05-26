@@ -21,4 +21,4 @@ jobs:
       if: github.repository == 'CreepPork/Beacon' && ! contains(github.event.head_commit.message, '[ci skip]')
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python3 tools/translations.py
+      run: python3 tools/ci/translations.py
