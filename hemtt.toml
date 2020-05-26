@@ -15,6 +15,15 @@ include = ["./include"]
 
 key_name = "{{prefix}}_{{version}}"
 
+postbuild = [
+    "!build"
+]
+
+[scripts.build]
+steps = [
+    "bash ./build.sh"
+]
+
 releasebuild = [
     "@zip @beacon",
 ]
