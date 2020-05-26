@@ -19,13 +19,13 @@ postbuild = [
     "!build"
 ]
 
+releasebuild = [
+    "@zip @beacon",
+]
+
 [scripts.build]
 steps = [
     "bash ./build.sh"
-]
-
-releasebuild = [
-    "@zip @beacon",
 ]
 
 [header_exts]
