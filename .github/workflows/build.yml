@@ -75,7 +75,7 @@ jobs:
         run: cross build --release --target i686-unknown-linux-gnu
 
       - name: Move Extension
-        run: mv ./target/release/libbeacon.so ./beacon.so
+        run: mv ./target/i686-unknown-linux-gnu/release/libbeacon.so ./beacon.so
 
       - name: Build with HEMTT
         uses: arma-actions/hemtt@master
