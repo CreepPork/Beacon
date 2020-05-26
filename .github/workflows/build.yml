@@ -68,17 +68,17 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386;
           sudo apt update
+          sudo apt install libssl-dev
           sudo apt install libssl-dev:i386
-          export PKG_CONFIG_ALLOW_CROSS=1
 
       - name: Build Extension
-        run: cargo build --target i686-unknown-linux-gnu
+        run: PKG_CONFIG_ALLOW_CROSS=1 cargo build --target i686-unknown-linux-gnu
 
       - name: Test Extension
-        run: cargo test --target i686-unknown-linux-gnu
+        run: PKG_CONFIG_ALLOW_CROSS=1 cargo test --target i686-unknown-linux-gnu
 
       - name: Build Extension (Release)
-        run: cargo build --release --target i686-unknown-linux-gnu
+        run: PKG_CONFIG_ALLOW_CROSS=1 cargo build --release --target i686-unknown-linux-gnu
 
       - name: Move Extension
         run: mv ./target/i686-unknown-linux-gnu/release/libbeacon.so ./beacon.so
