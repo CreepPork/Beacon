@@ -83,7 +83,9 @@ jobs:
           command: build --release --ci
 
       - name: Rename Release to System
-        run: mv ./releases/@beacon.zip ./@beacon_linux.zip
+        run: |
+          mkdir releases
+          mv ./releases/@beacon.zip ./@beacon_linux.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -150,9 +152,9 @@ jobs:
           mv ./target/release/beacon.dll ./beacon_x64.dll
 
       - name: Build with HEMTT
-        uses: arma-actions/hemtt@master
-        with:
-          command: build --release --ci
+        run: |
+          python tools/get_hemtt.py
+          ./hemtt.exe build --release --ci
 
       - name: Rename Release to System
         shell: bash
