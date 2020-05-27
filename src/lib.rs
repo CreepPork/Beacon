@@ -28,6 +28,7 @@ lazy_static! {
 #[rv(thread = true)]
 fn start() {
     // Load from serverfiles at runtime but if not found use compile-time defaults
+    let ip = std::env::var("BEACON_IP").unwrap_or(dotenv!("BEACON_IP").to_string());
     let port = std::env::var("BEACON_PORT").unwrap_or(dotenv!("BEACON_PORT").to_string());
 
     rv_callback!(
@@ -36,7 +37,7 @@ fn start() {
         format!("Websocket is starting on port {}!", port)
     );
 
-    let server = TcpListener::bind(format!("127.0.0.1:{}", port)).unwrap();
+    let server = TcpListener::bind(format!("{}:{}", ip, port)).unwrap();
 
     for stream in server.incoming() {
         spawn(move || {
