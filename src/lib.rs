@@ -4,13 +4,17 @@ extern crate arma_rs_macros;
 use arma_rs::{rv, rv_handler};
 use chrono::prelude::*;
 use lazy_static::lazy_static;
+use tungstenite::protocol::WebSocket;
 use tungstenite::server::accept;
 use tungstenite::Message;
 
 use std::env;
 use std::net::TcpListener;
+use std::net::TcpStream;
 use std::sync::Mutex;
+use std::thread;
 use std::thread::spawn;
+use std::time;
 
 mod parse;
 
@@ -79,31 +83,21 @@ fn start() {
                     match command {
                         "messages" => {
                             // Output all messages in the buffer
-                            let mut messages = MESSAGE_BUFFER.lock().unwrap();
-
-                            if messages.len() == 0 {
-                                websocket
-                                    .write_message(Message::from("No messages in the buffer."))
-                                    .unwrap();
-
-                                break;
-                            }
-
-                            let message_string = messages.join("|=|");
-                            websocket
-                                .write_message(Message::from(message_string))
-                                .unwrap();
-
-                            // Clear the buffer
-                            messages.clear();
+                            send_buffer_messages(&mut websocket);
                         }
 
                         "say" => {
                             rv_callback!("beacon", "beacon_commands_fnc_say", arguments);
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
                         }
 
                         "get-players" => {
                             rv_callback!("beacon", "beacon_commands_fnc_getPlayers", "");
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
                         }
 
                         "kick" => {
@@ -113,6 +107,9 @@ fn start() {
                                 server_command_password,
                                 arguments
                             );
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
                         }
 
                         "ban" => {
@@ -122,10 +119,16 @@ fn start() {
                                 server_command_password,
                                 arguments
                             );
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
                         }
 
                         "execute" => {
                             rv_callback!("beacon", "beacon_commands_fnc_execute", arguments);
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
                         }
 
                         _ => {
@@ -138,6 +141,25 @@ fn start() {
             }
         });
     }
+}
+
+fn send_buffer_messages(websocket: &mut WebSocket<TcpStream>) {
+    let mut messages = MESSAGE_BUFFER.lock().unwrap();
+
+    if messages.len() == 0 {
+        websocket
+            .write_message(Message::from("No messages in the buffer."))
+            .unwrap();
+
+        return;
+    }
+
+    let message_string = messages.join("|=|");
+    websocket
+        .write_message(Message::from(message_string))
+        .unwrap();
+
+    messages.clear();
 }
 
 #[rv(thread = true)]
