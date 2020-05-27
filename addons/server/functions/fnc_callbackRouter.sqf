@@ -39,6 +39,10 @@ if (isNil { call _function }) exitWith {
 };
 
 // We have a double-call here because otherwise it returns the code itself
-_parsedData call call _function;
+private _result = _parsedData call call _function;
 
-nil
+if (isNil "_result") exitWith {};
+
+[
+    format ["Result (%1): %2", _functionName, _result]
+] call FUNC(message);
