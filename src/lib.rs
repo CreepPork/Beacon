@@ -3,6 +3,7 @@ extern crate arma_rs_macros;
 
 use arma_rs::{rv, rv_handler};
 use chrono::prelude::*;
+use dotenv::dotenv;
 use lazy_static::lazy_static;
 use tungstenite::protocol::WebSocket;
 use tungstenite::server::accept;
@@ -24,6 +25,8 @@ lazy_static! {
 
 #[rv(thread = true)]
 fn start() {
+    dotenv().ok();
+
     rv_callback!(
         "beacon",
         "beacon_common_fnc_log",
