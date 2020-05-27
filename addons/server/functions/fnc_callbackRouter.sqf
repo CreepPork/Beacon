@@ -25,11 +25,12 @@ if (_functionName == "") exitWith {
     WARNING_1("Function name %1 cannot be empty.",_functionName);
 };
 
-// If data isn't string array then we want to wrap it in an array
-private _parsedData = if (_data select [0] == "[") then {
-    parseSimpleArray _data
+private _parsedData = "";
+
+if (_data select [0, 1] == "[") then {
+    _parsedData = parseSimpleArray _data;
 } else {
-    parseSimpleArray format ["[%1]", str _data]
+    _parsedData = _data;
 };
 
 private _function = compile _functionName;
