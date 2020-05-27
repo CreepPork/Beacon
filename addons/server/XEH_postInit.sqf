@@ -6,13 +6,11 @@ addMissionEventHandler ["ExtensionCallback", {
     params ["_name", "_function", "_data"];
 
     if (_name == "beacon") then {
-        [_function, _data] call beacon_server_fnc_callbackRouter;
+        [_function, _data] call FUNC(callbackRouter);
     };
 
-    diag_log(format ["found callback: %1, %2, %3", _name, _function, _data]);
+    LOG_3("Found callback: %1, %2, %3",_name,_function,_data);
 }];
 
-// "beacon" callExtension "version";
-// "beacon" callExtension "start";
+[] call FUNC(start);
 
-[] call beacon_server_fnc_start;
