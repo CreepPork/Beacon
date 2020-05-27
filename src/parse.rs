@@ -38,6 +38,7 @@ fn json_to_sqf_parse_array(json: &Value, sqf_vec: &mut Vec<String>) {
     }
 }
 
+#[allow(dead_code)]
 pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
     let json: Value = match serde_json::from_str(str_json) {
         Ok(j) => j,
@@ -75,6 +76,7 @@ pub fn json_to_sqf(str_json: &str) -> Result<String, serde_json::Error> {
  * [[["alive", true],["health", 0.5]],[["health", 0.5]],[["name", "CreepPork"]]]
  * [{"alive": true, "health": 0.5},{"health": 0.5},{"name": "CreepPork"}]
  */
+#[allow(dead_code)]
 fn sqf_to_json_parse_array(str_sqf: &str) -> String {
     let mut str_json = String::from(str_sqf);
 
@@ -107,12 +109,15 @@ fn sqf_to_json_parse_array(str_sqf: &str) -> String {
  * [["alive", true],["health", 0.5],["name", "CreepPork"]]
  * {"name": "CreepPork", "alive": true, "health": 0.5}
  */
+#[allow(dead_code)]
 fn sqf_to_json_parse_object(str_sqf: &str) -> String {
-    let str_json = String::from("");
+    let str_json = String::from(str_sqf);
 
+    // TODO
     str_json
 }
 
+#[allow(dead_code)]
 pub fn sqf_to_json(str_sqf: &str) -> Result<String, serde_json::Error> {
     let mut str_json = String::from("{}");
 
