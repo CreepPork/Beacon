@@ -16,4 +16,4 @@
 
 params ["_unit"];
 
-_unit in (allCurators apply { getAssignedCuratorUnit _x });
+_unit in (allCurators apply { getAssignedCuratorUnit _x })
