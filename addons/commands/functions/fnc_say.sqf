@@ -28,6 +28,7 @@ if (GVAR(customChannel) == 0) exitWith {
 };
 
 {
+    [_x, [GVAR(customChannel), _message]] remoteExecCall ["customChat", _x];
 } forEach allPlayers;
 
-LOG_1("Server said: %1",_message);
+nil
