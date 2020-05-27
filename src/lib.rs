@@ -69,12 +69,17 @@ fn start() {
                     };
 
                     let blocks: Vec<&str> = message.split("|=|").collect();
-                    if blocks.len() <= 3 {
+                    if blocks.len() < 3 {
                         rv_callback!(
                             "beacon",
                             "beacon_common_fnc_log",
                             "Recieved callback that had an invalid payload"
                         );
+
+                        websocket
+                            .write_message(Message::from("Invalid message payload."))
+                            .unwrap();
+
                         break;
                     }
 
@@ -96,7 +101,7 @@ fn start() {
                     }
 
                     let command = blocks[2];
-                    let arguments = format!("{:?}", &blocks[3..]);
+                    let arguments = &blocks[3..];
 
                     match command {
                         "messages" => {
@@ -105,7 +110,15 @@ fn start() {
                         }
 
                         "say" => {
-                            rv_callback!("beacon", "beacon_commands_fnc_say", arguments);
+                            if arguments.len() < 1 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
+                            rv_callback!("beacon", "beacon_commands_fnc_say", arguments[0]);
 
                             thread::sleep(time::Duration::from_secs(1));
                             send_buffer_messages(&mut websocket);
@@ -119,11 +132,21 @@ fn start() {
                         }
 
                         "kick" => {
+                            if arguments.len() < 2 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
                             rv_callback!(
                                 "beacon",
                                 "beacon_commands_fnc_kick",
                                 server_command_password,
-                                arguments
+                                // Someone, somewhere converts this to a number but we really don't want that here
+                                format!("|{}", arguments[0]),
+                                arguments[1]
                             );
 
                             thread::sleep(time::Duration::from_secs(1));
@@ -131,11 +154,19 @@ fn start() {
                         }
 
                         "ban" => {
+                            if arguments.len() < 1 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
                             rv_callback!(
                                 "beacon",
                                 "beacon_commands_fnc_ban",
                                 server_command_password,
-                                arguments
+                                format!("|{}", arguments[0])
                             );
 
                             thread::sleep(time::Duration::from_secs(1));
@@ -143,7 +174,15 @@ fn start() {
                         }
 
                         "execute" => {
-                            rv_callback!("beacon", "beacon_commands_fnc_execute", arguments);
+                            if arguments.len() < 1 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
+                            rv_callback!("beacon", "beacon_commands_fnc_execute", arguments[0]);
 
                             thread::sleep(time::Duration::from_secs(1));
                             send_buffer_messages(&mut websocket);

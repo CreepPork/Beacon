@@ -19,7 +19,7 @@
 
 params [
     ["_password", "", [""]],
-    ["_steamUid", 0, [""]],
+    ["_steamUid", "", [""]],
     ["_message", "", [""]]
 ];
 
@@ -28,16 +28,19 @@ if (_password == "") exitWith {
     false
 };
 
-if (_steamUid == 0) exitWith {
+if (_steamUid == "") exitWith {
     WARNING("Steam UID was not passed.");
     false
 };
 
-private _steamUids = [] call CBA_fnc_players apply { getPlayerUID _x };
+private _steamUids = allPlayers apply { getPlayerUID _x };
+
+// Drop the |
+_steamUid = _steamUid select [1];
 
 if !(_steamUid in _steamUids) exitWith {
     WARNING_1("Given Steam UID (%1) is not in-game!",_steamUid);
     false
 };
 
-_password serverCommand format ["#kick %1 %2", _steamUid, _password]
+_password serverCommand format ["#kick %1 %2", _steamUid, _message]
