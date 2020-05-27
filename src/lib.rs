@@ -2,6 +2,7 @@
 extern crate arma_rs_macros;
 
 use arma_rs::{rv, rv_handler};
+use chrono::prelude::*;
 use lazy_static::lazy_static;
 use tungstenite::server::accept;
 use tungstenite::Message;
@@ -141,7 +142,9 @@ fn start() {
 
 #[rv(thread = true)]
 fn reply(message: String) {
-    MESSAGE_BUFFER.lock().unwrap().push(message);
+    let time = Utc::now().format("%Y-%m-%d %H:%M:%S").to_string();
+
+    MESSAGE_BUFFER.lock().unwrap().push(time + ": " + &message);
 }
 
 #[rv(thread = true)]
