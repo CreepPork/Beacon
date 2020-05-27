@@ -15,4 +15,4 @@
  * Public: No
  */
 
-[] call CBA_fnc_players apply { [name _x, getPlayerUID _x, IS_CURATOR(_x)] }
+allPlayers apply { [name _x, getPlayerUID _x, IS_CURATOR(_x)] }

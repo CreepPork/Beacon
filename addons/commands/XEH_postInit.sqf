@@ -5,7 +5,7 @@ if (isServer) then {
         [1, 0, 0, 1],
         "[SERVER]",
         "[SERVER]",
-        [] call CBA_fnc_players,
+        allPlayers,
         false
     ];
 

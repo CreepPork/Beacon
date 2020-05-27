@@ -28,7 +28,6 @@ if (GVAR(customChannel) == 0) exitWith {
 };
 
 {
-    _x customChat [GVAR(customChannel), _message];
-} forEach ([] call CBA_fnc_players);
+} forEach allPlayers;
 
 LOG_1("Server said: %1",_message);
