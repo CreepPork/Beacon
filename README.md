@@ -6,11 +6,15 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 
 ### Windows
 
+- `cp .env.example .env`
+- Configure the `.env` file
 - `cargo build`
 - `bash ./build.sh`
 
 ### Linux
 
+- `cp .env.example .env`
+- Configure the `.env` file
 - `sudo dpkg --add-architecture i386;`
 - `sudo apt update`
 - `sudo apt install libssl-dev`
