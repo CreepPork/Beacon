@@ -1,1 +1,1 @@
-#include "\x\zen\addons\blank\script_component.hpp"
+#include "\x\beacon\addons\blank\script_component.hpp"
