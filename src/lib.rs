@@ -2,13 +2,20 @@
 extern crate arma_rs_macros;
 
 use arma_rs::{rv, rv_handler};
-use std::env;
-use std::net::TcpListener;
-use std::thread::spawn;
+use lazy_static::lazy_static;
 use tungstenite::server::accept;
 use tungstenite::Message;
 
+use std::env;
+use std::net::TcpListener;
+use std::sync::Mutex;
+use std::thread::spawn;
+
 mod parse;
+
+lazy_static! {
+    static ref MESSAGE_BUFFER: Mutex<Vec<String>> = Mutex::new(vec![]);
+}
 
 #[rv(thread = true)]
 fn start() {
@@ -26,7 +33,7 @@ fn start() {
             let command_username: String = env::var("COMMAND_USERNAME").unwrap();
             let command_password: String = env::var("COMMAND_PASSWORD").unwrap();
 
-            let websocket = accept(stream.unwrap()).unwrap();
+            let mut websocket = accept(stream.unwrap()).unwrap();
 
             loop {
                 let recieved_message = websocket.read_message().unwrap();
@@ -57,6 +64,11 @@ fn start() {
                             "beacon_server_fnc_log",
                             "Recieved callback with wrong credentials"
                         );
+
+                        websocket
+                            .write_message(Message::from("Invalid credentials."))
+                            .unwrap();
+
                         break;
                     }
 
@@ -64,15 +76,42 @@ fn start() {
                     let arguments = format!("{:?}", &blocks[3..]);
 
                     match command {
+                        "messages" => {
+                            // Output all messages in the buffer
+                            let mut messages = MESSAGE_BUFFER.lock().unwrap();
+
+                            if messages.len() == 0 {
+                                websocket
+                                    .write_message(Message::from("No messages in the buffer."))
+                                    .unwrap();
+
+                                break;
+                            }
+
+                            let message_string = messages.join("|=|");
+                            websocket
+                                .write_message(Message::from(message_string))
+                                .unwrap();
+
+                            // Clear the buffer
+                            messages.clear();
+                        }
+
                         "say" => {
                             rv_callback!("beacon", "beacon_commands_fnc_say", arguments);
-                            websocket
-                                .write_message(Message::from("You said a message."))
-                                .unwrap();
                         }
 
                         "get-players" => {
                             rv_callback!("beacon", "beacon_commands_fnc_getPlayers", "");
+                        }
+
+                        "kick" => {
+                            rv_callback!(
+                                "beacon",
+                                "beacon_commands_fnc_kick",
+                                server_command_password,
+                                arguments
+                            );
                         }
 
                         "ban" => {
@@ -82,6 +121,10 @@ fn start() {
                                 server_command_password,
                                 arguments
                             );
+                        }
+
+                        "execute" => {
+                            rv_callback!("beacon", "beacon_commands_fnc_execute", arguments);
                         }
 
                         _ => {
@@ -94,6 +137,11 @@ fn start() {
             }
         });
     }
+}
+
+#[rv(thread = true)]
+fn reply(message: String) {
+    MESSAGE_BUFFER.lock().unwrap().push(message);
 }
 
 #[rv(thread = true)]

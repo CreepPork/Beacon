@@ -46,6 +46,7 @@ dependencies = [
  "arma-rs",
  "arma-rs-macros",
  "dotenv",
+ "lazy_static",
  "libc",
  "serde_json",
  "tungstenite",
