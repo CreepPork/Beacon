@@ -15,6 +15,7 @@ arma-rs = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 arma-rs-macros = { git = "https://github.com/synixebrett/arma-rs", branch = "master" }
 chrono = "0.4.11"
 dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
 lazy_static = "1.4.0"
 libc = "*"
 tungstenite = "0.10.1"

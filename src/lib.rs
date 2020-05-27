@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate arma_rs_macros;
 
+#[macro_use]
+extern crate dotenv_codegen;
+
 use arma_rs::{rv, rv_handler};
 use chrono::prelude::*;
 use dotenv::dotenv;
@@ -9,7 +12,6 @@ use tungstenite::protocol::WebSocket;
 use tungstenite::server::accept;
 use tungstenite::Message;
 
-use std::env;
 use std::net::TcpListener;
 use std::net::TcpStream;
 use std::sync::Mutex;
@@ -27,21 +29,34 @@ lazy_static! {
 fn start() {
     dotenv().ok();
 
+    let port = dotenv!("BEACON_PORT");
+
     rv_callback!(
         "beacon",
         "beacon_common_fnc_log",
-        "Websocket is starting on port 9001!"
+        format!("Websocket is starting on port {}!", port)
     );
 
-    let server = TcpListener::bind("127.0.0.1:9001").unwrap();
+    let server = TcpListener::bind(format!("127.0.0.1:{}", port)).unwrap();
 
     for stream in server.incoming() {
         spawn(move || {
-            let server_command_password: String = env::var("SERVER_COMMAND_PASSWORD").unwrap();
-            let command_username: String = env::var("COMMAND_USERNAME").unwrap();
-            let command_password: String = env::var("COMMAND_PASSWORD").unwrap();
+            let unwrapped_stream = stream.unwrap();
 
-            let mut websocket = accept(stream.unwrap()).unwrap();
+            rv_callback!(
+                "beacon",
+                "beacon_common_fnc_log",
+                format!(
+                    "Client connected from {}",
+                    unwrapped_stream.local_addr().ok().unwrap()
+                )
+            );
+
+            let server_command_password = dotenv!("SERVER_COMMAND_PASSWORD");
+            let command_username = dotenv!("COMMAND_USERNAME");
+            let command_password = dotenv!("COMMAND_PASSWORD");
+
+            let mut websocket = accept(unwrapped_stream).unwrap();
 
             loop {
                 let recieved_message = websocket.read_message().unwrap();
