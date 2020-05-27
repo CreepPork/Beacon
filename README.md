@@ -5,6 +5,7 @@ A Rust library which is loaded by Arma 3, as an extension, that creates a websoc
 ## Requirements
 
 - Arma 3 (server would be preferable)
+- Latest version of CBA (can be loaded as a servermod)
 
 ## Installation
 
