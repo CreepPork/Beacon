@@ -5,13 +5,13 @@
  *
  * Arguments:
  * 0: Server command password <STRING>
- * 1: Player Steam UID <NUMBER>
+ * 1: Player Steam UID <STRING>
  *
  * Return Value:
  * Is Successful <BOOL>
  *
  * Example:
- * ["mypass", 76561198054743530, "Very Bad!"] call beacon_commands_fnc_ban
+ * ["mypass", "|76561198054743530", "Very Bad!"] call beacon_commands_fnc_ban
  *
  * Public: No
  */
