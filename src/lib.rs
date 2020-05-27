@@ -72,7 +72,7 @@ fn start() {
                     if blocks.len() <= 3 {
                         rv_callback!(
                             "beacon",
-                            "beacon_server_fnc_log",
+                            "beacon_common_fnc_log",
                             "Recieved callback that had an invalid payload"
                         );
                         break;
@@ -84,7 +84,7 @@ fn start() {
                     if username != command_username || password != command_password {
                         rv_callback!(
                             "beacon",
-                            "beacon_server_fnc_log",
+                            "beacon_common_fnc_log",
                             "Recieved callback with wrong credentials"
                         );
 
