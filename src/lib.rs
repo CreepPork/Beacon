@@ -27,9 +27,8 @@ lazy_static! {
 
 #[rv(thread = true)]
 fn start() {
-    dotenv().ok();
-
-    let port = dotenv!("BEACON_PORT");
+    // Load from serverfiles at runtime but if not found use compile-time defaults
+    let port = std::env::var("BEACON_PORT").unwrap_or(dotenv!("BEACON_PORT").to_string());
 
     rv_callback!(
         "beacon",
@@ -52,9 +51,12 @@ fn start() {
                 )
             );
 
-            let server_command_password = dotenv!("SERVER_COMMAND_PASSWORD");
-            let command_username = dotenv!("COMMAND_USERNAME");
-            let command_password = dotenv!("COMMAND_PASSWORD");
+            let server_command_password = std::env::var("SERVER_COMMAND_PASSWORD")
+                .unwrap_or(dotenv!("SERVER_COMMAND_PASSWORD").to_string());
+            let command_username = std::env::var("COMMAND_USERNAME")
+                .unwrap_or(dotenv!("COMMAND_USERNAME").to_string());
+            let command_password = std::env::var("COMMAND_PASSWORD")
+                .unwrap_or(dotenv!("COMMAND_PASSWORD").to_string());
 
             let mut websocket = accept(unwrapped_stream).unwrap();
 
@@ -232,4 +234,6 @@ fn stop() {
 }
 
 #[rv_handler]
-fn init() {}
+fn init() {
+    dotenv().ok();
+}
