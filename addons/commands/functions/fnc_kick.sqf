@@ -33,12 +33,10 @@ if (_steamUid == "") exitWith {
     false
 };
 
-private _steamUids = allPlayers apply { getPlayerUID _x };
-
 // Drop the |
 _steamUid = _steamUid select [1];
 
-if !(_steamUid in _steamUids) exitWith {
+if (isNull (_steamUid call EFUNC(common,getUnitByUid))) exitWith {
     WARNING_1("Given Steam UID (%1) is not in-game!",_steamUid);
     false
 };
