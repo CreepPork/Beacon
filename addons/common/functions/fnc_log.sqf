@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /*
  * Author: CreepPork
  * This would be called by the extension to log to the .rpt file.
@@ -16,4 +17,4 @@
 
 params ["_message"];
 
-diag_log format ["Beacon: %1", _message];
+INFO_1("%1",_message);
