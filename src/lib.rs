@@ -111,7 +111,7 @@ fn start() {
                             send_buffer_messages(&mut websocket);
                         }
 
-                        "say" => {
+                        "execute" => {
                             if arguments.len() < 1 {
                                 websocket
                                     .write_message(Message::from("Invalid command syntax."))
@@ -120,7 +120,27 @@ fn start() {
                                 break;
                             }
 
-                            rv_callback!("beacon", "beacon_commands_fnc_say", arguments[0]);
+                            rv_callback!("beacon", "beacon_commands_fnc_execute", arguments[0]);
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
+                        }
+
+                        "ban" => {
+                            if arguments.len() < 1 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
+                            rv_callback!(
+                                "beacon",
+                                "beacon_commands_fnc_ban",
+                                server_command_password,
+                                format!("|{}", arguments[0])
+                            );
 
                             thread::sleep(time::Duration::from_secs(1));
                             send_buffer_messages(&mut websocket);
@@ -155,7 +175,7 @@ fn start() {
                             send_buffer_messages(&mut websocket);
                         }
 
-                        "ban" => {
+                        "say" => {
                             if arguments.len() < 1 {
                                 websocket
                                     .write_message(Message::from("Invalid command syntax."))
@@ -164,27 +184,7 @@ fn start() {
                                 break;
                             }
 
-                            rv_callback!(
-                                "beacon",
-                                "beacon_commands_fnc_ban",
-                                server_command_password,
-                                format!("|{}", arguments[0])
-                            );
-
-                            thread::sleep(time::Duration::from_secs(1));
-                            send_buffer_messages(&mut websocket);
-                        }
-
-                        "execute" => {
-                            if arguments.len() < 1 {
-                                websocket
-                                    .write_message(Message::from("Invalid command syntax."))
-                                    .unwrap();
-
-                                break;
-                            }
-
-                            rv_callback!("beacon", "beacon_commands_fnc_execute", arguments[0]);
+                            rv_callback!("beacon", "beacon_commands_fnc_say", arguments[0]);
 
                             thread::sleep(time::Duration::from_secs(1));
                             send_buffer_messages(&mut websocket);
