@@ -7,7 +7,7 @@
  * 0: Code to execute <STRING>
  *
  * Return Value:
- * None
+ * Executed code returns <ANY>
  *
  * Example:
  * ["hint ""hello world""] call beacon_commands_fnc_execute
@@ -23,6 +23,4 @@ if (_code == "") exitWith {
     WARNING_1("Code %1 must be a string.",_code);
 };
 
-private _result = call compile _code;
-
-[format ["Result from code: %1", _result]] call EFUNC(server,message);
+call compile _code
