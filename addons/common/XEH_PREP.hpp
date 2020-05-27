@@ -1,1 +1,2 @@
+PREP(isCurator);
 PREP(log);
