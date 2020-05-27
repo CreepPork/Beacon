@@ -101,7 +101,7 @@ For development purposes:
 - `sudo apt install libssl-dev`
 - `sudo apt install libssl-dev:i386`
 - `sudo apt install gcc-multilib`
-- `rustup install i686-unknown-linux-gnu`
+- `rustup target install i686-unknown-linux-gnu`
 - `bash ./build.sh`
 
 ## Security
