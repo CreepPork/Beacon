@@ -40,4 +40,4 @@ if !(_steamUid in _steamUids) exitWith {
     false
 };
 
-_password serverCommand format ["kick %1 %2", _steamUid, _password]
+_password serverCommand format ["#kick %1 %2", _steamUid, _password]
