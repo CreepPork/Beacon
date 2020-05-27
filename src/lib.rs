@@ -139,6 +139,7 @@ fn start() {
                                 "beacon",
                                 "beacon_commands_fnc_ban",
                                 server_command_password,
+                                // Someone, somewhere converts this to a number but we really don't want that here
                                 format!("|{}", arguments[0])
                             );
 
@@ -166,7 +167,26 @@ fn start() {
                                 "beacon",
                                 "beacon_commands_fnc_kick",
                                 server_command_password,
-                                // Someone, somewhere converts this to a number but we really don't want that here
+                                format!("|{}", arguments[0]),
+                                arguments[1]
+                            );
+
+                            thread::sleep(time::Duration::from_secs(1));
+                            send_buffer_messages(&mut websocket);
+                        }
+
+                        "pm" => {
+                            if arguments.len() < 2 {
+                                websocket
+                                    .write_message(Message::from("Invalid command syntax."))
+                                    .unwrap();
+
+                                break;
+                            }
+
+                            rv_callback!(
+                                "beacon",
+                                "beacon_commands_fnc_pm",
                                 format!("|{}", arguments[0]),
                                 arguments[1]
                             );
