@@ -8,7 +8,8 @@ files = [
     "*.so",
     "LICENSE",
     "README.md",
-    "meta.cpp"
+    "meta.cpp",
+    ".env.example"
 ]
 
 include = ["./include"]
