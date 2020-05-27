@@ -10,7 +10,7 @@
  * None
  *
  * Example:
- * ["hint ""hello world""] call beacon_server_fnc_execute
+ * ["hint ""hello world""] call beacon_commands_fnc_execute
  *
  * Public: No
  */
@@ -23,6 +23,6 @@ if (_code == "") exitWith {
     WARNING_1("Code %1 must be a string.",_code);
 };
 
-call compile _code;
+private _result = call compile _code;
 
-nil
+[format ["Result from code: %1", _result]] call EFUNC(server,message);
