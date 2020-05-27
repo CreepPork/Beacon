@@ -16,4 +16,4 @@
 
 #include "\x\beacon\addons\main\script_macros.hpp"
 
-#define IS_CURATOR(unit) (call EFUNC(common,isCurator))
+#define IS_CURATOR(unit) (unit call EFUNC(common,isCurator))
