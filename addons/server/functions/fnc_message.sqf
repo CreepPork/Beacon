@@ -23,6 +23,6 @@ if (_message == "") exitWith {
     WARNING("Message cannot be empty.");
 };
 
-EXTENSION_NAME callExtension ["reply", _message];
+EXTENSION_NAME callExtension ["reply", [_message]];
 
 nil
