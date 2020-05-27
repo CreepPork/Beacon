@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 /*
  * Author: CreepPork
- * Gets all players and returns their name and Steam UID.
+ * Gets all players and returns their name, Steam UID and if they are Zeus.
  *
  * Arguments:
  * None
@@ -15,4 +15,4 @@
  * Public: No
  */
 
-allPlayers apply { [name _x, getPlayerUID _x] }
+[] call CBA_fnc_players apply { [name _x, getPlayerUID _x, IS_CURATOR(_x)] }
