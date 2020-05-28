@@ -23,12 +23,9 @@ if (_message == "") exitWith {
     WARNING_1("Message %1 cannot be empty.");
 };
 
-if (GVAR(customChannel) == 0) exitWith {
-    WARNING("Custom channel could not be created.");
-};
-
-{
-    [_x, [GVAR(customChannel), _message]] remoteExecCall ["customChat", _x];
-} forEach allPlayers;
+[
+    "[SERVER]",
+    _message
+] remoteExecCall [QEFUNC(common,showMessageHint), 0];
 
 nil

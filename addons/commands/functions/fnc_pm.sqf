@@ -29,10 +29,6 @@ if (_steamUid == "") exitWith {
     WARNING("Steam UID was not passed.");
 };
 
-if (GVAR(customChannel) == 0) exitWith {
-    WARNING("Custom channel could not be created.");
-};
-
 // Drop the |
 _steamUid = _steamUid select [1];
 
@@ -43,6 +39,9 @@ if (isNull _unit) exitWith {
     false
 };
 
-[_unit, [GVAR(customChannel), _message]] remoteExecCall ["customChat", _unit];
+[
+    "[SERVER] [DM]",
+    _message
+] remoteExecCall [QEFUNC(common,showMessageHint), _unit];
 
 nil
