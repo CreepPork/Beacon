@@ -5,6 +5,7 @@
  *
  * Arguments:
  * 0: Message <STRING>
+ * 1: Footer <STRING>
  *
  * Return Value:
  * None
@@ -16,7 +17,8 @@
  */
 
 params [
-    ["_message", "", [""]]
+    ["_message", "", [""]],
+    ["_footer", "", [""]]
 ];
 
 if (_message == "") exitWith {
@@ -25,7 +27,8 @@ if (_message == "") exitWith {
 
 [
     "[SERVER]",
-    _message
+    _message,
+    _footer
 ] remoteExecCall [QEFUNC(common,showMessageHint), 0];
 
 nil

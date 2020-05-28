@@ -6,6 +6,7 @@
  * Arguments:
  * 0: Player Steam UID <STRING>
  * 1: Message <STRING>
+ * 2: Footer <STRING>
  *
  * Return Value:
  * None
@@ -18,7 +19,8 @@
 
 params [
     ["_steamUid", "", [""]],
-    ["_message", "", [""]]
+    ["_message", "", [""]],
+    ["_footer", "", [""]]
 ];
 
 if (_message == "") exitWith {
@@ -41,7 +43,8 @@ if (isNull _unit) exitWith {
 
 [
     "[SERVER] [DM]",
-    _message
+    _message,
+    _footer
 ] remoteExecCall [QEFUNC(common,showMessageHint), _unit];
 
 nil

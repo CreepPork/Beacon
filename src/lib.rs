@@ -12,6 +12,7 @@ use tungstenite::protocol::WebSocket;
 use tungstenite::server::accept;
 use tungstenite::Message;
 
+use std::env;
 use std::net::TcpListener;
 use std::net::TcpStream;
 use std::sync::Mutex;
@@ -28,8 +29,8 @@ lazy_static! {
 #[rv(thread = true)]
 fn start() {
     // Load from serverfiles at runtime but if not found use compile-time defaults
-    let ip = std::env::var("BEACON_IP").unwrap_or(dotenv!("BEACON_IP").to_string());
-    let port = std::env::var("BEACON_PORT").unwrap_or(dotenv!("BEACON_PORT").to_string());
+    let ip = env::var("BEACON_IP").unwrap_or(dotenv!("BEACON_IP").to_string());
+    let port = env::var("BEACON_PORT").unwrap_or(dotenv!("BEACON_PORT").to_string());
 
     rv_callback!(
         "beacon",
@@ -52,12 +53,12 @@ fn start() {
                 )
             );
 
-            let server_command_password = std::env::var("SERVER_COMMAND_PASSWORD")
+            let server_command_password = env::var("SERVER_COMMAND_PASSWORD")
                 .unwrap_or(dotenv!("SERVER_COMMAND_PASSWORD").to_string());
-            let command_username = std::env::var("COMMAND_USERNAME")
-                .unwrap_or(dotenv!("COMMAND_USERNAME").to_string());
-            let command_password = std::env::var("COMMAND_PASSWORD")
-                .unwrap_or(dotenv!("COMMAND_PASSWORD").to_string());
+            let command_username =
+                env::var("COMMAND_USERNAME").unwrap_or(dotenv!("COMMAND_USERNAME").to_string());
+            let command_password =
+                env::var("COMMAND_PASSWORD").unwrap_or(dotenv!("COMMAND_PASSWORD").to_string());
 
             let mut websocket = accept(unwrapped_stream).unwrap();
 
@@ -185,11 +186,15 @@ fn start() {
                                 break;
                             }
 
+                            let footer_message = env::var("BEACON_SAY_FOOTER")
+                                .unwrap_or(dotenv!("BEACON_SAY_FOOTER").to_string());
+
                             rv_callback!(
                                 "beacon",
                                 "beacon_commands_fnc_pm",
                                 format!("|{}", arguments[0]),
-                                arguments[1]
+                                arguments[1],
+                                footer_message
                             );
 
                             thread::sleep(time::Duration::from_secs(1));
@@ -205,7 +210,15 @@ fn start() {
                                 break;
                             }
 
-                            rv_callback!("beacon", "beacon_commands_fnc_say", arguments[0]);
+                            let footer_message = env::var("BEACON_SAY_FOOTER")
+                                .unwrap_or(dotenv!("BEACON_SAY_FOOTER").to_string());
+
+                            rv_callback!(
+                                "beacon",
+                                "beacon_commands_fnc_say",
+                                arguments[0],
+                                footer_message
+                            );
 
                             thread::sleep(time::Duration::from_secs(1));
                             send_buffer_messages(&mut websocket);
