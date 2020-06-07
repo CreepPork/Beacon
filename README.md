@@ -79,7 +79,7 @@ To find all the supported commands see the list below.
 
 - `say|=|<message>` - Sends a global message to all players.
   - Returns: Nothing.
-  - Example: `myusername|=|mypass|=|pm|=|Server is shutting down!`
+  - Example: `myusername|=|mypass|=|say|=|Server is shutting down!`
 
 ## Compilation
 
